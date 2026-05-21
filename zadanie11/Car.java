@@ -1,16 +1,18 @@
-
+package zadanie11;
 import java.time.LocalDate;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 public class Car {
     private String registry;
     private String type;
     private int year;
     private double howManyKms;
-    int timeRn = LocalDate.now().getYear();
+    private static final int timeRn = LocalDate.now().getYear();
+    boolean needService;
 
-
-
+    public boolean isNeedService() {
+        return needService;
+    }
 
     public Car(String registry, String type, int year, double howManyKms) {
         this.registry = registry;
@@ -21,7 +23,7 @@ public class Car {
             System.out.println("Nieprawidlowy typ samochodu");
         }
 
-        if (year < 1900 && year > timeRn) {
+        if (year < 1900 || year > timeRn) {
             System.out.println("Zła data produkcji");
         }else {
             this.year = year;
@@ -35,12 +37,14 @@ public class Car {
 
     public void serwis(){
         int serwisKm = timeRn - 5;
-        if (howManyKms > 20000 || year > serwisKm){
+        if (howManyKms > 20000 || year < serwisKm){
+            needService = true;
             System.out.println("Wymaga serwisu");
+
         }else{
+            needService = false;
             System.out.println("Nie wymaga serwisu");
         }
-
     }
 
     public String getRegistry() {
@@ -70,6 +74,7 @@ public class Car {
             this.howManyKms = howManyKms;
         }
     }
+
 
     @Override
     public String toString() {
